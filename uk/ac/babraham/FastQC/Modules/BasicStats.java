@@ -151,6 +151,154 @@ public class BasicStats extends AbstractQCModule {
 		super.writeTable(report, new ResultsTable());
 	}
 
+	/*==============================================================================================================
+	Modifications for IRIDA
+	 ==============================================================================================================*/
+
+	/**
+	 * Get the filename.
+	 *
+	 * @return the name of the processed file.
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * Get the total number of sequences in the file.
+	 *
+	 * @return Total number of sequences in the file.
+	 */
+	public long getActualCount() {
+		return actualCount;
+	}
+
+	/**
+	 * Get the total number of filtered sequences in the file.
+	 *
+	 * @return Total number of filtered sequences in the file.
+	 */
+	public long getFilteredCount() {
+		return filteredCount;
+	}
+
+	/**
+	 * Get the length of the shortest sequence in the file.
+	 *
+	 * @return Length of the shortest sequence in the file.
+	 */
+	public int getMinLength() {
+		return minLength;
+	}
+
+	/**
+	 * Get the length of the longest sequence in the file.
+	 *
+	 * @return Length of the longest sequence in the file.
+	 */
+	public int getMaxLength() {
+		return maxLength;
+	}
+
+	/**
+	 * Get the total number of 'G' in the file.
+	 *
+	 * @return Total number of 'G' in the file.
+	 */
+	public long getGCount() {
+		return gCount;
+	}
+
+	/**
+	 * Get the total number of 'C' in the file.
+	 *
+	 * @return Total number of 'C' in the file.
+	 */
+	public long getCCount() {
+		return cCount;
+	}
+
+	/**
+	 * Get the total number of 'A' in the file.
+	 *
+	 * @return Total number of 'A' in the file.
+	 */
+	public long getACount() {
+		return aCount;
+	}
+
+	/**
+	 * Get the total number of 'T' in the file.
+	 *
+	 * @return Total number of 'T' in the file.
+	 */
+	public long getTCount() {
+		return tCount;
+	}
+
+	/**
+	 * Get the total number of 'N' in the file.
+	 *
+	 * @return Total number of 'N' in the file.
+	 */
+	public long getNCount() {
+		return nCount;
+	}
+
+	/**
+	 * Get the lowest quality character observed during processing. Used to
+	 * determine the encoding of the file.
+	 *
+	 * @return Lowest quality character observed during processing.
+	 * @see {@link BasicStats#getEncoding()}
+	 */
+	public char getLowestChar() {
+		return lowestChar;
+	}
+
+	/**
+	 * Get the file type (either color-space or conventional base-calls).
+	 *
+	 * @return The type of file.
+	 */
+	public String getFileType() {
+		return fileType;
+	}
+
+	/**
+	 * Get the encoding of the file. Uses the lowest observed quality character
+	 * to determine the encoding.
+	 *
+	 * @return Encoding of the file.
+	 * @see {@link BasicStats#getEncoding()}
+	 */
+	public PhredEncoding getEncoding() {
+		return PhredEncoding.getFastQEncodingOffset(lowestChar);
+	}
+
+	/**
+	 * Get the GC Content of the processed sequences.
+	 *
+	 * @return GC Content of the processed sequences.
+	 * @see {@link BasicStats#getACount()}
+	 * @see {@link BasicStats#getCCount()}
+	 * @see {@link BasicStats#getGCount()}
+	 * @see {@link BasicStats#getTCount()}
+	 */
+	public short getGCContent() {
+		long totalBases = aCount + tCount + gCount + cCount;
+		if (totalBases > 0) {
+			// cast complete result to short, this will never be more than 100.
+			return (short) (((gCount + cCount) * 100.0) / (aCount + tCount + gCount + cCount));
+		} else {
+			return 0;
+		}
+	}
+
+	/*==============================================================================================================
+	End Modifications for IRIDA
+	 ==============================================================================================================*/
+
 	@SuppressWarnings("serial")
 	private class ResultsTable extends AbstractTableModel {
 				

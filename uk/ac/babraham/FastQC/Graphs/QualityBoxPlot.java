@@ -37,6 +37,8 @@ public class QualityBoxPlot extends JPanel {
 	private double minY;
 	private double maxY;
 	private double yInterval;
+	private int height;
+	private int width;
 	
 	private static final Color GOOD = new Color(195,230,195);
 	private static final Color BAD = new Color(230,220,195);
@@ -60,8 +62,41 @@ public class QualityBoxPlot extends JPanel {
 		this.xLabels = xLabels;
 		this.graphTitle = graphTitle;
 		this.yInterval = yInterval;
+		this.height = -1;
+		this.width = -1;
 	}
-		
+
+	/*==============================================================================================================
+	Modifications for IRIDA
+	 ==============================================================================================================*/
+
+	public int getHeight () {
+		if (height <0) {
+			return super.getHeight();
+		}
+		return height;
+	}
+
+	public int getWidth () {
+		if (width <0) {
+			return super.getWidth();
+		}
+		return width;
+	}
+
+	public void paint (Graphics g, int width, int height) {
+		this.height = height;
+		this.width = width;
+		paint(g);
+		this.height = -1;
+		this.width = -1;
+	}
+
+	/*==============================================================================================================
+	End Modifications for IRIDA
+	 ==============================================================================================================*/
+
+
 	public void paint (Graphics g) {
 		super.paint(g);
 		

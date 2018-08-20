@@ -70,6 +70,25 @@ public class OverRepresentedSeqs extends AbstractQCModule {
 		}
 		return false;
 	}
+
+	/*==============================================================================================================
+	Modifications for IRIDA
+	 ==============================================================================================================*/
+
+	/**
+	 * Get the over-represented sequences observed during processing.
+	 *
+	 * @return Over-represented sequences observed during processing.
+	 */
+	public OverrepresentedSeq[] getOverrepresentedSequences() {
+		if (!calculated)
+			getOverrepresentedSeqs();
+		return overrepresntedSeqs;
+	}
+
+	/*==============================================================================================================
+	End Modifications for IRIDA
+	 ==============================================================================================================*/
 	
 	public String description() {
 		return "Identifies sequences which are overrepresented in the set";
@@ -230,7 +249,7 @@ public class OverRepresentedSeqs extends AbstractQCModule {
 		}
 	}
 	
-	private class OverrepresentedSeq implements Comparable<OverrepresentedSeq>{
+	public class OverrepresentedSeq implements Comparable<OverrepresentedSeq>{
 		
 		private String seq;
 		private int count;
