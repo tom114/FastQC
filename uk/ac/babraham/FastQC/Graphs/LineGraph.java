@@ -38,6 +38,8 @@ public class LineGraph extends JPanel {
 	private double minY;
 	private double maxY;
 	private double yInterval;
+	private int height;
+	private int width;
 	
 	private static final Color [] COLOURS = new Color[] {new Color(220,0,0), new Color(0,0,220), new Color(0,220,0), Color.DARK_GRAY, Color.MAGENTA, Color.ORANGE,Color.YELLOW,Color.CYAN,Color.PINK,Color.LIGHT_GRAY};
 	
@@ -47,6 +49,9 @@ public class LineGraph extends JPanel {
 		for (int i=0;i<xCategories.length;i++) {
 			this.xCategories[i] = ""+xCategories[i];
 		}
+
+		this.height = -1;
+		this.width = -1;
 		
 	}
 	
@@ -90,6 +95,36 @@ public class LineGraph extends JPanel {
 	public Dimension getMinimumSize () {
 		return new Dimension(100,200);
 	}
+
+	/*==============================================================================================================
+	Modifications for IRIDA
+	 ==============================================================================================================*/
+
+	public int getHeight () {
+		if (height <0) {
+			return super.getHeight();
+		}
+		return height;
+	}
+
+	public int getWidth () {
+		if (width <0) {
+			return super.getWidth();
+		}
+		return width;
+	}
+
+	public void paint (Graphics g, int width, int height) {
+		this.height = height;
+		this.width = width;
+		paint(g);
+		this.height = -1;
+		this.width = -1;
+	}
+
+	/*==============================================================================================================
+	End Modifications for IRIDA
+	 ==============================================================================================================*/
 	
 	public void paint (Graphics g) {
 		super.paint(g);
